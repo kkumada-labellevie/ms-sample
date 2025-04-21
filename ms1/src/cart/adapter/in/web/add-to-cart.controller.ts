@@ -1,18 +1,22 @@
-import { Controller, Post, Body, Inject } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param, Inject } from '@nestjs/common';
 import { AddToCartCommandRequest } from '../command/add-to-cart.command.request';
 import { AddToCartUseCase } from '../../../application/port/in/add-to-cart.usecase';
+import { DeleteFromCartCommandRequest } from '../command/delete-from-cart.command.request';
+import { DeleteFromCartUseCase } from '../../../application/port/in/delete-from-cart.usecase';
+import { Cart } from 'src/cart/application/domain/model/cart.entity';
 
 /**
  * APIのエンドポイント
  */
-@Controller('add-to-cart')
+@Controller()
 export class AddToCartController {
   // APIが実行すべきユースケースをDIする
   constructor(
     @Inject('AddToCartService') private readonly addToCartService: AddToCartUseCase,
+    @Inject('DeleteFromCartService') private readonly deleteFromCartService: DeleteFromCartUseCase,
   ) {}
 
-  @Post()
+  @Post("add-to-Cart")
   // @TODO 本来はもっと実装が必要
   public async addToCart(@Body() request: any): Promise<void> {
     const [cmd, cmdError] = AddToCartCommandRequest.createCommand(
@@ -30,4 +34,21 @@ export class AddToCartController {
     // ユースケースを実行
     const error = await this.addToCartService.addItem(cmd);
   }
+
+  @Delete("delete-from-cart/:cartId")
+  // @TODO 本来はもっと実装が必要
+  public async deleteFromCart(@Param("cartId") id: number): Promise<void> {
+    const [cmd, cmdError] = DeleteFromCartCommandRequest.createCommand(
+      id,
+    );
+    // このエラーはバリデーションエラー
+    if (cmdError) {
+      // @TODO エラーレスポンスを返す
+      return
+    }
+
+    // ユースケースを実行
+    await this.deleteFromCartService.deleteItem(cmd);
+  }
+  
 }

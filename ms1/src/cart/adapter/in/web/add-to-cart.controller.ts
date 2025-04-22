@@ -35,9 +35,9 @@ export class AddToCartController {
     const error = await this.addToCartService.addItem(cmd);
   }
 
-  @Delete("delete-from-cart/:cartId")
+  @Delete("delete-from-cart/:id")
   // @TODO 本来はもっと実装が必要
-  public async deleteFromCart(@Param("cartId") id: number): Promise<void> {
+  public async deleteFromCart(@Param("id") id: number): Promise<void> {
     const [cmd, cmdError] = DeleteFromCartCommandRequest.createCommand(
       id,
     );
@@ -48,7 +48,7 @@ export class AddToCartController {
     }
 
     // ユースケースを実行
-    await this.deleteFromCartService.deleteItem(cmd);
+    const error = await this.deleteFromCartService.deleteItem(cmd);
   }
   
 }

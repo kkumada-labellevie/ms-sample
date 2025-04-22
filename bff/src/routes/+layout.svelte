@@ -19,6 +19,9 @@
     <li>
       <a href="/get-to-cart/1" class="text-blue-700 underline hover:no-underline">Get cart<span class="pl-2"> /get-to-cart/[id]</span></a>
     </li>
+    <li>
+      <a href="/delete-from-cart" class="text-blue-700 underline hover:no-underline">Delete carts</a>
+    </li>
   </ul>
 </nav>
 

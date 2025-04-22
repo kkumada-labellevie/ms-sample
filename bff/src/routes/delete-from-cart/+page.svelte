@@ -6,7 +6,7 @@
 
 <h1 class="text-xl mb-4">Delete Cart Page</h1>
 
-<form class="flex flex-col gap-4 pr-8" method="DELETE" novalidate>
+<form class="flex flex-col gap-4 pr-8" method="POST" novalidate>
   {#if form?.success}
     <p class="text-red-950 font-bold mb-4">Cart has been deleted!</p>
   {/if}

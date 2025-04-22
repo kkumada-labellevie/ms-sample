@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Body, Param, Inject } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Inject } from '@nestjs/common';
 import { AddToCartCommandRequest } from '../command/add-to-cart.command.request';
 import { AddToCartUseCase } from '../../../application/port/in/add-to-cart.usecase';
 import { DeleteFromCartCommandRequest } from '../command/delete-from-cart.command.request';
@@ -35,11 +35,11 @@ export class AddToCartController {
     const error = await this.addToCartService.addItem(cmd);
   }
 
-  @Delete("delete-from-cart/:id")
+  @Delete("delete-from-cart")
   // @TODO 本来はもっと実装が必要
-  public async deleteFromCart(@Param("id") id: number): Promise<void> {
+  public async deleteFromCart(@Body() request: any): Promise<void> {
     const [cmd, cmdError] = DeleteFromCartCommandRequest.createCommand(
-      id,
+      request.id,
     );
     // このエラーはバリデーションエラー
     if (cmdError) {

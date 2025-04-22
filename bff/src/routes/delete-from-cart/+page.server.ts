@@ -9,9 +9,9 @@ export const actions: Actions = {
       headers: {
         'Content-Type': 'application/json',
       },
-      params: {
-        id : formData.get('id'),
-      }
+      body: JSON.stringify({
+        id: formData.get('id'),
+      }),
     });
 
     return await response.json();
